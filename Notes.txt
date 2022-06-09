@@ -1,0 +1,4 @@
+
+
+
+- Create function that will parse user input to make sure it's an integer
