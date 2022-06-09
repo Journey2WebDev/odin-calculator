@@ -1,33 +1,80 @@
 /* Structure */
-.numbersDiv{
-  height: 225px;
-  width: 175px;
+#outsideFrame{
+  height: 375px;
+  width: 350px;
+  border: 1px solid black;
+  border-radius: 5%;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  align-items: space-evenly;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background-color: darkgray;
 }
 
-.operatorsDiv{
-  height: 225px;
-  width: 125px;
+#displayField{
+  height: 75px;
+  width: 315px;
+  border: 1px solid black;
+  border-radius: 10%;
+  background-color: whitesmoke;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  align-items: space-evenly;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 10px;
+  font-family: "courier new";
+  font-size: 16pt;
 }
 
-.numOpDiv{
+#numOpDiv{
   height: 250px;
   width: 325px;
   border: 1px solid black;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
 
+#numbersDiv{
+  height: 230px;
+  width: 170px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: space-between;
+}
+
+#operatorEqualDiv{
+  height: 230px;
+  width: 110px;
+  gap: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  /* justify-content: space-between; */
+}
+
+#operatorsDiv{
+  height: 110px;
+  width: 110px;
+  gap: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+#equalDiv{
+  height: 110px;
+  width: 125px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: space-evenly;
+}
+
+
 /* Buttons */
-.allBtns{
+#numbersDiv div, #operatorsDiv div{
   height: 50px;
   width: 50px;
   margin: 0;
@@ -42,23 +89,37 @@
   justify-content: center;
 }
 
-.numberBtn{
+#number0Btn, #number1Btn, #number2Btn, #number3Btn, #number4Btn,
+#number5Btn, #number6Btn, #number7Btn, #number8Btn, #number9Btn,
+#decimalBtn{
   color: blue;
   background-color: whitesmoke;
 }
 
-.clearBtn{
+#clearBtn{
   color: white;
-  background-color: orange;
+  background-color: darkgoldenrod;
 }
 
-.operatorBtn{
+#plusBtn, #minusBtn, #multiplyBtn, #divideBtn{
   color: white;
   background-color: grey;
 }
 
-.equalBtn{
-  height: 100px;
+#equalBtn{
+  height: 108px;
+  width: 50px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid lightgray;
+  border-radius: 10%;
+  font-size: 16pt;
+  font-weight: 700;
+  font-family:"Trebuchet MS";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   color: white;
-  background-color: darkblue;
+  background-color: darkolivegreen;
 }

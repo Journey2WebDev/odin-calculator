@@ -1,6 +1,6 @@
 
 // ------------------------------
-// Basic Operators
+// Basic Operator Functions
 // ------------------------------
 
 function addition(a,b){
@@ -31,3 +31,10 @@ function operate(operator, a, b){
       return division(a,b);
   }
 }
+
+// ------------------------------
+// Buttons: Numpad
+// ------------------------------
+
+
+
