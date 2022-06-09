@@ -101,7 +101,7 @@
   background-color: darkgoldenrod;
 }
 
-#plusBtn, #minusBtn, #multiplyBtn, #divideBtn{
+#additionBtn, #subtractionBtn, #multiplicationBtn, #divisionBtn{
   color: white;
   background-color: grey;
 }
