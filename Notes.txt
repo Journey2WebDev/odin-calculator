@@ -1,6 +1,4 @@
-- If [windowShowingAnswer is true], and the user clicks an operator (eg, "+"), update global vars as needed so the user can evaluate the resulting expression with "="
-= Will need to modify beginning of function getOperatorContent
-
+# Per Instructions
 - (6b) Need to account for functionality in instruction 6b. For an expression with multiple operators, after user enters first (term1 operator term2) sequence, the calculator should show the result of that expression immediately.
 
 - (6c) Need to add rounding/precision so that non-terminating decimals don't run too far
@@ -17,6 +15,19 @@
 = Will need a boolean like expressionHasDecimal to prevent >1 decimal in expression
 
 - Check for division by zero
+
+# Misc
+- If [windowShowingAnswer is true], and the user clicks an operator (eg, "+"), update global vars as needed so the user can evaluate the resulting expression with "="
+= Will need to modify beginning of function getOperatorContent
+
+- Only allow user to enter operators in certain conditions
+= If window is blank (ie, expression array length is 0) => cannot enter operator
+= If expression array length == 2, this means expression already has operator ==> cannot enter
+
+- Update to remove 'current number sequence' variable; replace logic with a boolean for 'expression has operator'
+= If new boolean is false, have all numbers entered overwrite first element in expression array
+= If true, " " third element in expression array
+
 
 # Style
 + Increase size of all elements by 1.5

@@ -58,20 +58,35 @@ function clearWindowAndVars(){
 }
 
 function getNumContent(){
-  if(windowShowingAnswer){
-    clearWindowAndVars();
+  // Only allow user to press numbers if display window is *not* showing
+  // answer to an expression
+  if(!windowShowingAnswer){
+    let numberClicked = this.textContent;
+    updateDisplayWindow(numberClicked, "num");
+    updateNumberSequnce(numberClicked);
   }
-
-  let numberClicked = this.textContent;
-  updateDisplayWindow(numberClicked, "num");
-  updateNumberSequnce(numberClicked);
 }
 
 function getOperatorContent(){
+  // If expression array has at least 3 elements (eg, term1, operator, term2)
+  // then evaluate the expression and display answer
+  if(expressionArray.length == 3){
+    evaluateExpression();
+  } else if(expressionArray.length > 3){
+    alert("Warning: Expression Array has too many elements.");
+  }
+
+  if(!windowShowingAnswer){
+    // Only add 'number sequence' to expression array if it will be the first term
+    // in their expression
+    updateExpressionArray(currentNumberSequence, "num");
+  } else{
+    // Once operator is added to window, change boolean from true to false
+    windowShowingAnswer = !windowShowingAnswer;
+  }
+
   let operatorClicked = this.textContent;
   updateDisplayWindow(operatorClicked, "op");
-
-  updateExpressionArray(currentNumberSequence, "num");
 
   switch(this.id) {
     case "additionBtn":
@@ -87,7 +102,6 @@ function getOperatorContent(){
       updateExpressionArray("division", "op");
       break;
   }
-
 }
 
 function updateDisplayWindow(content, type){
@@ -95,10 +109,9 @@ function updateDisplayWindow(content, type){
   
   if(type == "num" || type == "op"){
     displayWindow.textContent = displayWindow.textContent + content;
-  } else if(type == "ans"){
+  } else if(type == "answer"){
     displayWindow.textContent = content;
   }
-
 }
 
 function updateNumberSequnce(num){
@@ -115,25 +128,25 @@ function updateExpressionArray(element, type){
 }
 
 function evaluateExpression(){
+  // Add second term to expression array
   updateExpressionArray(currentNumberSequence, "num");
 
-  while(expressionArray.length >= 3){
-    
-    // Pull numbers and operator from left-side of expression array
-    let term1 = expressionArray.shift();
-    let operator = expressionArray.shift();
-    let term2 = expressionArray.shift();
+  // Pull numbers and operator from left-side of expression array
+  let term1 = expressionArray.shift();
+  let operator = expressionArray.shift();
+  let term2 = expressionArray.shift();
 
-    // Evaluate expression; append answer to left-side of expression array
-    let answer = 0;
-    answer += operate(operator, term1, term2);
-    expressionArray.unshift(answer);
-  }
+  // Evaluate expression; append answer to left-side of expression array
+  let answer = operate(operator, term1, term2);
+  expressionArray.unshift(answer);
 
   // Show expression answer in dispay window
-  updateDisplayWindow(expressionArray[0], "ans");
+  updateDisplayWindow(expressionArray[0], "answer");
 
-  // Boolean so next button clicked (eg, a number) knows to run clearWindowAndVars()
+  // Clear number sequence
+  currentNumberSequence = "";
+
+  // Boolean showing display window is showing answer to an expression
   windowShowingAnswer = true;
 }
 
