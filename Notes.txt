@@ -22,10 +22,8 @@
 
 - Create function that will parse user input to make sure it's an integer
 
-- Animate buttons on click event; ie, make it look like they're clicked
-
-- After [equal] is pressed, show [answer] on display
-= Need to delete/overwrite answer with next (number, operator, etc) push
-
 - Check for division by zero
+
+# Style
+- Animate buttons on click event; ie, make it look like they're clicked
 
