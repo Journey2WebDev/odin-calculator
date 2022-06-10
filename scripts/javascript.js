@@ -41,6 +41,7 @@ function operate(operator, a, b){
 // ------------------------------
 
 let currentNumberSequence = "";
+let expressionHasOperator = false;
 let expressionArray = []
 let windowShowingAnswer = false;
 
@@ -53,6 +54,7 @@ clearWindowAndVars();
 function clearWindowAndVars(){
   document.getElementById("displayWindow").textContent = ""
   currentNumberSequence = "";
+  expressionHasOperator = false;
   expressionArray = [];
   windowShowingAnswer = false;
 }
@@ -62,52 +64,54 @@ function getNumContent(){
   // answer to an expression
   if(!windowShowingAnswer){
     let numberClicked = this.textContent;
-    updateDisplayWindow(numberClicked, "num");
+    updateDisplayWindow(numberClicked, "number");
     updateNumberSequnce(numberClicked);
+    updateExpressionArray(currentNumberSequence, "number");
   }
 }
 
 function getOperatorContent(){
-  // If expression array has at least 3 elements (eg, term1, operator, term2)
-  // then evaluate the expression and display answer
+  // If expression array has at least 3 elements (ie: term1, operator, term2)
+  // then evaluate the current expression and display answer
   if(expressionArray.length == 3){
     evaluateExpression();
   } else if(expressionArray.length > 3){
     alert("Warning: Expression Array has too many elements.");
   }
 
-  if(!windowShowingAnswer){
-    // Only add 'number sequence' to expression array if it will be the first term
-    // in their expression
-    updateExpressionArray(currentNumberSequence, "num");
-  } else{
-    // Once operator is added to window, change boolean from true to false
-    windowShowingAnswer = !windowShowingAnswer;
-  }
+  // Once oeprator entered, display window no longer showing just answer
+  windowShowingAnswer = false;
 
   let operatorClicked = this.textContent;
-  updateDisplayWindow(operatorClicked, "op");
+  updateDisplayWindow(operatorClicked, "operator");
 
   switch(this.id) {
     case "additionBtn":
-      updateExpressionArray("addition", "op");
+      updateExpressionArray("addition", "operator");
       break;
     case "subtractionBtn":
-      updateExpressionArray("subtraction", "op");
+      updateExpressionArray("subtraction", "operator");
       break;
     case "multiplicationBtn":
-      updateExpressionArray("multiplication", "op");
+      updateExpressionArray("multiplication", "operator");
       break;
     case "divisionBtn":
-      updateExpressionArray("division", "op");
+      updateExpressionArray("division", "operator");
       break;
   }
+
+  // Change boolean to true
+  expressionHasOperator = true;
+
+  // Set current number sequence as blank
+  currentNumberSequence = "";
+
 }
 
 function updateDisplayWindow(content, type){
   let displayWindow = document.getElementById("displayWindow");
   
-  if(type == "num" || type == "op"){
+  if(type == "number" || type == "operator"){
     displayWindow.textContent = displayWindow.textContent + content;
   } else if(type == "answer"){
     displayWindow.textContent = content;
@@ -118,19 +122,23 @@ function updateNumberSequnce(num){
   currentNumberSequence = currentNumberSequence + num;
 }
 
-function updateExpressionArray(element, type){
-  if(type == "num"){
-    expressionArray.push(parseInt(currentNumberSequence));
-    currentNumberSequence = "";
-  } else if(type == "op"){
-    expressionArray.push(element);
+function updateExpressionArray(element, type){ 
+  if(type == "number" && expressionHasOperator == false){
+    // First term (first element) in expression array
+    expressionArray[0] = parseInt(currentNumberSequence);
+
+  } else if(type == "number" && expressionHasOperator == true) {
+    // Second term (third element) in expression array
+    expressionArray[2] = parseInt(currentNumberSequence);
+
+  } else if(type == "operator"){
+    // Operator is always second element in expression array
+    expressionArray[1] = element;
   }
 }
 
-function evaluateExpression(){
-  // Add second term to expression array
-  updateExpressionArray(currentNumberSequence, "num");
 
+function evaluateExpression(){
   // Pull numbers and operator from left-side of expression array
   let term1 = expressionArray.shift();
   let operator = expressionArray.shift();
@@ -143,10 +151,13 @@ function evaluateExpression(){
   // Show expression answer in dispay window
   updateDisplayWindow(expressionArray[0], "answer");
 
-  // Clear number sequence
+  // Set current number sequence as blank
   currentNumberSequence = "";
 
-  // Boolean showing display window is showing answer to an expression
+  // Set operator boolean to false
+  expressionHasOperator = false;
+
+  // Set display window answer boolean to true
   windowShowingAnswer = true;
 }
 
@@ -206,7 +217,5 @@ divisionBtn.addEventListener("click", getOperatorContent);
 // Evaluation (equal sign)
 let equalBtn = document.getElementById("equalBtn");
 equalBtn.addEventListener("click", evaluateExpression);
-
-
 
 
