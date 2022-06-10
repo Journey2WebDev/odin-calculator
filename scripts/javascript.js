@@ -51,12 +51,16 @@ clearWindowAndVars();
 // Functions
 // ------------------------------
 
-function clearWindowAndVars(){
-  document.getElementById("displayWindow").textContent = ""
+function resetGlobalVars(){
   currentNumberSequence = "";
   expressionHasOperator = false;
   expressionArray = [];
   windowShowingAnswer = false;
+}
+
+function clearWindowAndVars(){
+  document.getElementById("displayWindow").textContent = ""
+  resetGlobalVars();
 }
 
 function getNumContent(){
@@ -115,6 +119,8 @@ function updateDisplayWindow(content, type){
     displayWindow.textContent = displayWindow.textContent + content;
   } else if(type == "answer"){
     displayWindow.textContent = content;
+    // Set display window answer boolean to true
+    windowShowingAnswer = true;
   }
 }
 
@@ -139,6 +145,17 @@ function updateExpressionArray(element, type){
 
 
 function evaluateExpression(){
+  // Only evaluate expression if array has 3 elements
+  if(expressionArray.length < 3){
+    return;
+  }
+
+  // Check for division by zero
+  if(expressionArray[1] == "division" && expressionArray[2]===0){
+    snarkyComment();
+    return;
+  }
+
   // Pull numbers and operator from left-side of expression array
   let term1 = expressionArray.shift();
   let operator = expressionArray.shift();
@@ -156,11 +173,32 @@ function evaluateExpression(){
 
   // Set operator boolean to false
   expressionHasOperator = false;
-
-  // Set display window answer boolean to true
-  windowShowingAnswer = true;
 }
 
+// ------------------------------
+// Snarky Comments
+// ------------------------------
+
+function snarkyComment(){
+  // Update as more snark is obtained
+  let totalSnark = 2;
+  let randomSnark = Math.ceil(Math.random() * totalSnark);
+  
+  let snark = "";
+  switch(randomSnark){
+    case 1:
+      snark = "Why would you hurt me?";
+      break;
+    case 2:
+      snark = "Zero privileges revoked!";
+      break;
+  }
+  
+  resetGlobalVars();
+
+  // Release the snark
+  updateDisplayWindow(snark,"answer"); 
+}
 
 // ------------------------------
 // Listeners

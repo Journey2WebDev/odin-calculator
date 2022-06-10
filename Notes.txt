@@ -1,24 +1,16 @@
 # Per Instructions
-- (6b) Need to account for functionality in instruction 6b. For an expression with multiple operators, after user enters first (term1 operator term2) sequence, the calculator should show the result of that expression immediately.
-
-- (6c) Need to add rounding/precision so that non-terminating decimals don't run too far
-= Look up why JS truncates the decimals without explicit code
-
-- (6d) Add checks for if equal button pressed too early
-= Check can be done at the top of evaluateExpression
-= If expressionArray is only length 2 --> output something to window
-= If last element in expression Array is a symbol (not a number) --> output something to window
-
-- (6f) Account for division by zero
++ (6b) Need to account for functionality in instruction 6b. For an expression with multiple operators, after user enters first (term1 operator term2) sequence, the calculator should show the result of that expression immediately.
+* (6c) Need to add rounding/precision so that non-terminating decimals don't run too far
++ Look up why JS truncates the decimals without explicit code
++ (6d) Add checks for if equal button pressed too early
++ (6f) Account for division by zero
 
 - (7) Add functionality for decimal point
 = Will need a boolean like expressionHasDecimal to prevent >1 decimal in expression
 
-- Check for division by zero
 
 # Misc
-- If [windowShowingAnswer is true], and the user clicks an operator (eg, "+"), update global vars as needed so the user can evaluate the resulting expression with "="
-= Will need to modify beginning of function getOperatorContent
++ If [windowShowingAnswer is true], and the user clicks an operator (eg, "+"), update global vars as needed so the user can evaluate the resulting expression with "="
 
 - Only allow user to enter operators in certain conditions
 = If window is blank (ie, expression array length is 0) => cannot enter operator
@@ -27,6 +19,10 @@
 - Update to remove 'current number sequence' variable; replace logic with a boolean for 'expression has operator'
 = If new boolean is false, have all numbers entered overwrite first element in expression array
 = If true, " " third element in expression array
+
+- Add 'history' into display window (eg) above where answer is displayed. This will show the expression that was just evaluated, eg:
+History (above): 9 + 5 =
+Display window: 14
 
 
 # Style
