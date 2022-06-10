@@ -40,87 +40,101 @@ function operate(operator, a, b){
 // Global variables & Initial Conditions
 // ------------------------------
 
-clearDisplay();
+let currentNumberSequence = "";
+let expressionArray = []
+let windowShowingAnswer = false;
 
-currentNumberSequence = "";
-numberArray = [];
-operatorArray = [];
-
+clearWindowAndVars();
 
 // ------------------------------
 // Functions
 // ------------------------------
 
-function clearDisplay(){
-  document.getElementById("displayField").textContent = ""
+function clearWindowAndVars(){
+  document.getElementById("displayWindow").textContent = ""
   currentNumberSequence = "";
-  numberArray = [];
-  operatorArray = [];
+  expressionArray = [];
+  windowShowingAnswer = false;
 }
 
 function getNumContent(){
+  if(windowShowingAnswer){
+    clearWindowAndVars();
+  }
+
   let numberClicked = this.textContent;
-  updateDisplayField(numberClicked);
+  updateDisplayWindow(numberClicked, "num");
   updateNumberSequnce(numberClicked);
 }
 
 function getOperatorContent(){
   let operatorClicked = this.textContent;
-  updateDisplayField(operatorClicked);
+  updateDisplayWindow(operatorClicked, "op");
 
-  updateNumberArray();
+  updateExpressionArray(currentNumberSequence, "num");
 
   switch(this.id) {
     case "additionBtn":
-      updateOperatorArray("addition");
+      updateExpressionArray("addition", "op");
       break;
     case "subtractionBtn":
-      updateOperatorArray("subtraction");
+      updateExpressionArray("subtraction", "op");
       break;
     case "multiplicationBtn":
-      updateOperatorArray("multiplication");
+      updateExpressionArray("multiplication", "op");
       break;
     case "divisionBtn":
-      updateOperatorArray("division");
+      updateExpressionArray("division", "op");
       break;
   }
 
 }
 
-function updateDisplayField(content){
-  let displayField = document.getElementById("displayField");
-  displayField.textContent = displayField.textContent + content;  
+function updateDisplayWindow(content, type){
+  let displayWindow = document.getElementById("displayWindow");
+  
+  if(type == "num" || type == "op"){
+    displayWindow.textContent = displayWindow.textContent + content;
+  } else if(type == "ans"){
+    displayWindow.textContent = content;
+  }
+
 }
 
 function updateNumberSequnce(num){
   currentNumberSequence = currentNumberSequence + num;
 }
 
-function updateNumberArray(){
-  numberArray.push(parseInt(currentNumberSequence));
-  currentNumberSequence = "";
+function updateExpressionArray(element, type){
+  if(type == "num"){
+    expressionArray.push(parseInt(currentNumberSequence));
+    currentNumberSequence = "";
+  } else if(type == "op"){
+    expressionArray.push(element);
+  }
 }
-
-function updateOperatorArray(op){
-  operatorArray.push(op);
-}
-
 
 function evaluateExpression(){
-  updateNumberArray();
+  updateExpressionArray(currentNumberSequence, "num");
 
-  let total = 0;
+  while(expressionArray.length >= 3){
+    
+    // Pull numbers and operator from left-side of expression array
+    let term1 = expressionArray.shift();
+    let operator = expressionArray.shift();
+    let term2 = expressionArray.shift();
 
-  while(operatorArray.length != 0){
-    // console.log(operatorArray);
-    // console.log(numberArray);
-    // console.log("");
-    total += operate(operatorArray.shift(), numberArray.shift(), numberArray.shift())
+    // Evaluate expression; append answer to left-side of expression array
+    let answer = 0;
+    answer += operate(operator, term1, term2);
+    expressionArray.unshift(answer);
   }
 
-//   console.log(operatorArray);
-//   console.log(numberArray);
-  console.log(total);
+  // Show expression answer in dispay window
+  updateDisplayWindow(expressionArray[0], "ans");
+
+  // Boolean so next button clicked (eg, a number) knows to run clearWindowAndVars()
+  windowShowingAnswer = true;
 }
 
 
@@ -130,7 +144,7 @@ function evaluateExpression(){
 
 // Clear
 let clearBtn = document.getElementById("clearBtn");
-clearBtn.addEventListener("click", clearDisplay);
+clearBtn.addEventListener("click", clearWindowAndVars);
 
 // Numbers
 let num0 = document.getElementById("number0Btn");
