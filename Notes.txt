@@ -1,6 +1,3 @@
-
-- Make the display twice as big; multiple all width & height by 1.5 or 2
-
 - If [windowShowingAnswer is true], and the user clicks an operator (eg, "+"), update global vars as needed so the user can evaluate the resulting expression with "="
 = Will need to modify beginning of function getOperatorContent
 
@@ -19,11 +16,10 @@
 - (7) Add functionality for decimal point
 = Will need a boolean like expressionHasDecimal to prevent >1 decimal in expression
 
-
-- Create function that will parse user input to make sure it's an integer
-
 - Check for division by zero
 
 # Style
++ Increase size of all elements by 1.5
 - Animate buttons on click event; ie, make it look like they're clicked
-
+- Make answer in window bold
+= Make it a slightly different color too

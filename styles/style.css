@@ -1,34 +1,34 @@
 /* Structure */
 #outsideFrame{
-  height: 375px;
-  width: 350px;
+  height: 562px;
+  width: 525px;
   border: 1px solid black;
   border-radius: 5%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
   background-color: darkgray;
 }
 
 #displayWindow{
-  height: 75px;
-  width: 315px;
+  height: 112px;
+  width: 487px;
   border: 1px solid black;
   border-radius: 10%;
   background-color: whitesmoke;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding-right: 10px;
+  padding-right: 15px;
   font-family: "courier new";
-  font-size: 16pt;
+  font-size: 24pt;
 }
 
 #numOpDiv{
-  height: 250px;
-  width: 325px;
+  height: 375px;
+  width: 487px;
   border: 1px solid black;
   display: flex;
   justify-content: space-around;
@@ -36,8 +36,8 @@
 }
 
 #numbersDiv{
-  height: 230px;
-  width: 170px;
+  height: 345px;
+  width: 255px;   
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -45,26 +45,26 @@
 }
 
 #operatorEqualDiv{
-  height: 230px;
-  width: 110px;
-  gap: 5px;
+  height: 345px;
+  width: 165px;  
+  gap: 7px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
 }
 
 #operatorsDiv{
-  height: 110px;
-  width: 110px;
-  gap: 4px;
+  height: 165px;
+  width: 165px;  
+  gap: 6px;  
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
 }
 
 #equalDiv{
-  height: 110px;
-  width: 125px;
+  height: 165px;
+  width: 188px;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -74,13 +74,13 @@
 
 /* Buttons */
 #numbersDiv div, #operatorsDiv div{
-  height: 50px;
-  width: 50px;
+  height: 75px;
+  width: 75px;    
   margin: 0;
   padding: 0;
   border: 1px solid lightgray;
   border-radius: 10%;
-  font-size: 16pt;
+  font-size: 24pt;
   font-weight: 700;
   font-family:"Trebuchet MS";
   display: flex;
@@ -106,13 +106,13 @@
 }
 
 #equalBtn{
-  height: 108px;
-  width: 50px;
+  height: 162px;
+  width: 75px;    
   margin: 0;
   padding: 0;
   border: 1px solid lightgray;
   border-radius: 10%;
-  font-size: 16pt;
+  font-size: 24pt;
   font-weight: 700;
   font-family:"Trebuchet MS";
   display: flex;
