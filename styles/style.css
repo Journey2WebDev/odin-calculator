@@ -90,11 +90,10 @@
 }
 
 /* Make button look like it is being 'clicked' */
-#numbersDiv button:active, #operatorsDiv button:active{
+#numbersDiv button:active, #operatorsDiv button:active, #equalDiv button:active{
   box-shadow: 0 0 0 darkgray;
-  margin: 2px 0 -2px 0;
+  margin: 1px 0 -1px 0;
 }
-
 
 #number0Btn, #number1Btn, #number2Btn, #number3Btn, #number4Btn,
 #number5Btn, #number6Btn, #number7Btn, #number8Btn, #number9Btn,
@@ -110,7 +109,7 @@
 
 #additionBtn, #subtractionBtn, #multiplicationBtn, #divisionBtn{
   color: white;
-  background-color: grey;
+  background-color: gray;
 }
 
 #equalBtn{
@@ -129,4 +128,5 @@
 
   color: white;
   background-color: darkolivegreen;
+  box-shadow: 2px 1px 2px rgb(70, 70, 70);
 }
