@@ -73,12 +73,12 @@
 
 
 /* Buttons */
-#numbersDiv div, #operatorsDiv div{
+#numbersDiv button, #operatorsDiv button{
   height: 75px;
   width: 75px;    
   margin: 0;
   padding: 0;
-  border: 1px solid lightgray;
+  border: 1px solid transparent;
   border-radius: 10%;
   font-size: 24pt;
   font-weight: 700;
@@ -86,7 +86,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 2px 1px 2px rgb(70, 70, 70);
 }
+
+/* Make button look like it is being 'clicked' */
+#numbersDiv button:active, #operatorsDiv button:active{
+  box-shadow: 0 0 0 darkgray;
+  margin: 2px 0 -2px 0;
+}
+
 
 #number0Btn, #number1Btn, #number2Btn, #number3Btn, #number4Btn,
 #number5Btn, #number6Btn, #number7Btn, #number8Btn, #number9Btn,
