@@ -5,7 +5,8 @@
 + (6d) Add checks for if equal button pressed too early
 + (6f) Account for division by zero
 + (7) Add functionality for decimal point
-
+- (9) Add backspace button
+- (10) Add keyboard support
 
 # Misc
 + If [windowShowingAnswer is true], and the user clicks an operator (eg, "+"), update global vars as needed so the user can evaluate the resulting expression with "="
@@ -16,6 +17,7 @@
 History (above): 9 + 5 =
 Display window: 14
 
+- Update to include use of [objects] somehow
 
 # Style
 + Increase size of all elements by 1.5
