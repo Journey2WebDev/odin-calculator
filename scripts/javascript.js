@@ -44,8 +44,10 @@ let currentNumberSequence = "";
 let expressionHasOperator = false;
 let expressionArray = []
 let windowShowingAnswer = false;
+let termHasDecimal = false;
 
-clearWindowAndVars();
+// clearWindowAndVars();
+// resetGlobalVars();
 
 // ------------------------------
 // Functions
@@ -56,6 +58,7 @@ function resetGlobalVars(){
   expressionHasOperator = false;
   expressionArray = [];
   windowShowingAnswer = false;
+  termHasDecimal = false;
 }
 
 function clearWindowAndVars(){
@@ -64,13 +67,28 @@ function clearWindowAndVars(){
 }
 
 function getNumContent(){
-  // Only allow user to press numbers if display window is *not* showing
-  // answer to an expression
-  if(!windowShowingAnswer){
-    let numberClicked = this.textContent;
-    updateDisplayWindow(numberClicked, "number");
-    updateNumberSequnce(numberClicked);
+  if(windowShowingAnswer){
+    // Only allow numbers if display window is *not* showing answer of an expression
+    return;
+  } else {
+    let content = this.textContent;
+    updateDisplayWindow(content, "number");
+    updateNumberSequnce(content);
     updateExpressionArray(currentNumberSequence, "number");
+  }
+}
+
+function getDecimalContent(){
+  if(windowShowingAnswer){
+    // Only allow numbers if display window is *not* showing answer of an expression
+    return;
+  } else if(termHasDecimal == true){
+    return;
+  } else {
+    let content = this.textContent;
+    updateDisplayWindow(content, "number");
+    updateNumberSequnce(content);
+    termHasDecimal = true;
   }
 }
 
@@ -104,12 +122,14 @@ function getOperatorContent(){
       break;
   }
 
-  // Change boolean to true
+  // Change operator boolean to true
   expressionHasOperator = true;
 
   // Set current number sequence as blank
   currentNumberSequence = "";
 
+  // Change decimal boolean to false
+  termHasDecimal = false;
 }
 
 function updateDisplayWindow(content, type){
@@ -131,18 +151,23 @@ function updateNumberSequnce(num){
 function updateExpressionArray(element, type){ 
   if(type == "number" && expressionHasOperator == false){
     // First term (first element) in expression array
-    expressionArray[0] = parseInt(currentNumberSequence);
-
+    if(termHasDecimal == true){
+      expressionArray[0] = parseFloat(currentNumberSequence);
+    }else{
+      expressionArray[0] = parseInt(currentNumberSequence);
+    }
   } else if(type == "number" && expressionHasOperator == true) {
     // Second term (third element) in expression array
-    expressionArray[2] = parseInt(currentNumberSequence);
-
+    if(termHasDecimal == true){
+      expressionArray[2] = parseFloat(currentNumberSequence);
+    }else{
+      expressionArray[2] = parseInt(currentNumberSequence);
+    }
   } else if(type == "operator"){
     // Operator is always second element in expression array
     expressionArray[1] = element;
   }
 }
-
 
 function evaluateExpression(){
   // Only evaluate expression if array has 3 elements
@@ -173,6 +198,9 @@ function evaluateExpression(){
 
   // Set operator boolean to false
   expressionHasOperator = false;
+
+  // Change decimal boolean to false
+  termHasDecimal = false;
 }
 
 // ------------------------------
@@ -190,7 +218,7 @@ function snarkyComment(){
       snark = "Why would you hurt me?";
       break;
     case 2:
-      snark = "Zero privileges revoked!";
+      snark = "Fine. No more zero button!";
       break;
   }
   
@@ -238,6 +266,10 @@ num8.addEventListener("click", getNumContent);
 
 let num9 = document.getElementById("number9Btn");
 num9.addEventListener("click", getNumContent);
+
+// Decimal
+let decimalBtn = document.getElementById("decimalBtn")
+decimalBtn.addEventListener("click", getDecimalContent)
 
 // Operators
 let additionBtn = document.getElementById("additionBtn");
