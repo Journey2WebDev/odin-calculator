@@ -4,21 +4,13 @@
 + Look up why JS truncates the decimals without explicit code
 + (6d) Add checks for if equal button pressed too early
 + (6f) Account for division by zero
-
-- (7) Add functionality for decimal point
-= Will need a boolean like expressionHasDecimal to prevent >1 decimal in expression
++ (7) Add functionality for decimal point
 
 
 # Misc
 + If [windowShowingAnswer is true], and the user clicks an operator (eg, "+"), update global vars as needed so the user can evaluate the resulting expression with "="
-
-- Only allow user to enter operators in certain conditions
-= If window is blank (ie, expression array length is 0) => cannot enter operator
-= If expression array length == 2, this means expression already has operator ==> cannot enter
-
-- Update to remove 'current number sequence' variable; replace logic with a boolean for 'expression has operator'
-= If new boolean is false, have all numbers entered overwrite first element in expression array
-= If true, " " third element in expression array
++ Restrict entry of operators in certain conditions
++ Update to remove 'current number sequence' variable; replace logic with a boolean for 'expression has operator'
 
 - Add 'history' into display window (eg) above where answer is displayed. This will show the expression that was just evaluated, eg:
 History (above): 9 + 5 =

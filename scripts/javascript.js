@@ -93,16 +93,21 @@ function getDecimalContent(){
 }
 
 function getOperatorContent(){
-  // If expression array has at least 3 elements (ie: term1, operator, term2)
-  // then evaluate the current expression and display answer
+  // If expression array has 3 elements, force evaluation of expression
   if(expressionArray.length == 3){
     evaluateExpression();
   } else if(expressionArray.length > 3){
     alert("Warning: Expression Array has too many elements.");
   }
 
-  // Once oeprator entered, display window no longer showing just answer
-  windowShowingAnswer = false;
+  // Only allow use of operators if appropriate
+  if(expressionArray.length == 0){
+    // No term(s) present in expression
+    return;
+  }else if(expressionArray.length == 2){
+    // Expression already has operator
+    return;
+  }
 
   let operatorClicked = this.textContent;
   updateDisplayWindow(operatorClicked, "operator");
@@ -121,6 +126,9 @@ function getOperatorContent(){
       updateExpressionArray("division", "operator");
       break;
   }
+
+  // Once operator entered, display window no longer showing just answer
+  windowShowingAnswer = false;
 
   // Change operator boolean to true
   expressionHasOperator = true;
