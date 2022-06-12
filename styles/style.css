@@ -64,10 +64,10 @@
 
 #equalDiv{
   height: 165px;
-  width: 188px;
+  width: 165px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: space-evenly;
 }
 
@@ -87,10 +87,12 @@
   align-items: center;
   justify-content: center;
   box-shadow: 2px 1px 2px rgb(70, 70, 70);
+  cursor: pointer;
 }
 
-/* Make button look like it is being 'clicked' */
-#numbersDiv button:active, #operatorsDiv button:active, #equalDiv button:active{
+/* Make button look like it is being 'pressed' */
+#numbersDiv button:active, #operatorsDiv button:active, 
+#equalDiv button:active, #equalDiv input:active{
   box-shadow: 0 0 0 darkgray;
   margin: 1px 0 -1px 0;
 }
@@ -125,8 +127,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 
   color: white;
   background-color: darkolivegreen;
+  box-shadow: 2px 1px 2px rgb(70, 70, 70);
+}
+
+#deleteBtn{
+  height: 73px;
+  width: 73px;    
+  margin-right: 2px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-shadow: 2px 1px 2px rgb(70, 70, 70);
 }

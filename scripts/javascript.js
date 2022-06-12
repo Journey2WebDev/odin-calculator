@@ -46,9 +46,6 @@ let expressionArray = []
 let windowShowingAnswer = false;
 let termHasDecimal = false;
 
-// clearWindowAndVars();
-// resetGlobalVars();
-
 // ------------------------------
 // Functions
 // ------------------------------
@@ -212,6 +209,93 @@ function evaluateExpression(){
 }
 
 // ------------------------------
+// Delete Button Functions
+// ------------------------------
+
+function deleteCheck(){
+
+  // If window is showing answer to an expression, delete btn should remove entire value
+  if(windowShowingAnswer){
+    clearWindowAndVars()
+    return;
+  }
+
+  if(expressionArray.length == 0){
+    return;
+  } else {
+    let lastArrayItem = expressionArray.pop();
+    console.log(lastArrayItem);
+
+    switch(typeof lastArrayItem){
+      // If popped item is a string, it's the operator
+      case "string":
+        deleteOperator();
+      case "number":
+        deleteNumber(lastArrayItem);
+    }
+  }
+}
+
+function deleteOperator(){
+  let temp = document.getElementById("displayWindow").textContent;
+  // Last character in string will be operation symbol (eg, +, -); remove it
+  let newString = temp.slice(0,(temp.length-1));
+  
+  // Update window with modified string
+  document.getElementById("displayWindow").textContent = newString;
+
+  // Update operator boolean
+  expressionHasOperator = false;
+
+  // Operator removed, which means window is showing term1
+  // If user wants to append more numbers to term1,
+  // currentNumberSequence needs to be populated (it was set to blank upon operator btn press)
+  updateNumberSequnce(newString);
+
+  return;
+}
+
+function deleteNumber(lastArrayItem){
+  // Convert number to string
+  let temp = "" + lastArrayItem;
+
+  // If string is length 1 (ie, a single number), just clear window
+  if(temp.length == 1){
+    clearWindowAndVars()
+    return;
+  }else{
+    
+    // Check if char to be removed is decimal; update boolean if so
+    let lastChar = temp.slice(-1);
+    if(temp.slice(-1) == "."){
+      termHasDecimal = false;
+    }
+
+    let newString = temp.slice(0,(temp.length-1));
+
+    // Update window with modified string
+    document.getElementById("displayWindow").textContent = newString;
+
+    // Update number sequence
+    currentNumberSequence = newString;
+
+    // Update expression array (item was popped off)
+    updateExpressionArray(newString, "number");
+
+    return;
+  }
+}
+
+
+// document.getElementById("displayWindow").textContent = ""
+// let currentNumberSequence = "";
+// let expressionHasOperator = false;
+// let expressionArray = []
+// let windowShowingAnswer = false;
+// let termHasDecimal = false;
+
+
+// ------------------------------
 // Snarky Comments
 // ------------------------------
 
@@ -296,4 +380,6 @@ divisionBtn.addEventListener("click", getOperatorContent);
 let equalBtn = document.getElementById("equalBtn");
 equalBtn.addEventListener("click", evaluateExpression);
 
-
+// Delete button
+let deleteBtn = document.getElementById("deleteBtn");
+deleteBtn.addEventListener("click", deleteCheck);

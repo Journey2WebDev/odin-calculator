@@ -6,6 +6,11 @@
 + (6f) Account for division by zero
 + (7) Add functionality for decimal point
 - (9) Add backspace button
+
+Updates needed: If deleting from term1 or term2, need to pull the [display screen] string and modify that directly. Using current method of modifying element from expressionArray and appending that to the [display screen] doesn't work. It works if you delete an operator because you're just left with term1.
+
+
+
 - (10) Add keyboard support
 
 # Misc
