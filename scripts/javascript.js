@@ -328,22 +328,23 @@ window.addEventListener('keydown', keyboardInput);
 function keyboardInput(e){
   // console.log("keyCode: " + e.keyCode);
 
-  const key = document.querySelector(`button[data-key="${e.keyCode}"]`);
+  const btnKey = document.querySelector(`button[data-key="${e.keyCode}"]`);
+  const inputKey = document.querySelector(`input[data-key="${e.keyCode}"]`);
 
   // Numbers on keypad
   if(e.keyCode >= 96 && e.keyCode <= 105){
-    getNumContent(key);
+    getNumContent(btnKey);
   };
 
   // Operators (107 = addition, 109 = subtraction, 106 = mult, 111 = division)
   let opVals = [106,107,109,111];
   if(opVals.includes(e.keyCode)){
-    getOperatorContent(key);
+    getOperatorContent(btnKey);
   }
 
   // Decimal
   if(e.keyCode == 110){
-    getDecimalContent(key);
+    getDecimalContent(btnKey);
   }
 
   // Keypad enter (-> Equal sign)
@@ -351,10 +352,16 @@ function keyboardInput(e){
     evaluateExpression();
   }
 
-  // Clear (c key -> 67)
-  if(e.keyCode == 67){
+  // Clear (delete (Del) key -> 46)
+  if(e.keyCode == 46){
     clearWindowAndVars();
   }
+
+  // Backspace (key -> 8)
+  if(e.keyCode == 8){
+    deleteCheck();
+  }
+
 }
 
 
