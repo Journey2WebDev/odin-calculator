@@ -63,33 +63,48 @@ function clearWindowAndVars(){
   resetGlobalVars();
 }
 
-function getNumContent(){
+function getNumContent(numElement){
+  let content = "";
+
   if(windowShowingAnswer){
     // Only allow numbers if display window is *not* showing answer of an expression
     return;
   } else {
-    let content = this.textContent;
+
+    // Check if keyboard or click input
+    if(this.textContent != undefined){
+      numElement = this;
+    }
+
+    content = numElement.textContent;
+
     updateDisplayWindow(content, "number");
     updateNumberSequnce(content);
     updateExpressionArray(currentNumberSequence, "number");
   }
 }
 
-function getDecimalContent(){
+function getDecimalContent(dotElement){
   if(windowShowingAnswer){
     // Only allow numbers if display window is *not* showing answer of an expression
     return;
   } else if(termHasDecimal == true){
     return;
   } else {
-    let content = this.textContent;
+
+    // Check if keyboard or click input
+    if(this.textContent != undefined){
+      dotElement = this;
+    }
+
+    let content = dotElement.textContent;
     updateDisplayWindow(content, "number");
     updateNumberSequnce(content);
     termHasDecimal = true;
   }
 }
 
-function getOperatorContent(){
+function getOperatorContent(opElement){
   // If expression array has 3 elements, force evaluation of expression
   if(expressionArray.length == 3){
     evaluateExpression();
@@ -106,10 +121,15 @@ function getOperatorContent(){
     return;
   }
 
-  let operatorClicked = this.textContent;
+  // Check if keyboard or click input
+  if(this.textContent != undefined){
+    opElement = this;
+  }
+
+  let operatorClicked = opElement.textContent;
   updateDisplayWindow(operatorClicked, "operator");
 
-  switch(this.id) {
+  switch(opElement.id) {
     case "additionBtn":
       updateExpressionArray("addition", "operator");
       break;
@@ -296,6 +316,45 @@ function snarkyComment(){
   // Release the snark
   updateDisplayWindow(snark,"answer"); 
 }
+
+// ------------------------------
+// Keyboard Inputs
+// ------------------------------
+
+window.addEventListener('keydown', keyboardInput);
+
+function keyboardInput(e){
+  // console.log("keyCode: " + e.keyCode);
+
+  const key = document.querySelector(`button[data-key="${e.keyCode}"]`);
+
+  // Numbers on keypad
+  if(e.keyCode >= 96 && e.keyCode <= 105){
+    getNumContent(key);
+  };
+
+  // Operators (107 = addition, 109 = subtraction, 106 = mult, 111 = division)
+  let opVals = [106,107,109,111];
+  if(opVals.includes(e.keyCode)){
+    getOperatorContent(key);
+  }
+
+  // Decimal
+  if(e.keyCode == 110){
+    getDecimalContent(key);
+  }
+
+  // Keypad enter (-> Equal sign)
+  if(e.keyCode == 13){
+    evaluateExpression();
+  }
+
+  // Clear (c key -> 67)
+  if(e.keyCode == 67){
+    clearWindowAndVars();
+  }
+}
+
 
 // ------------------------------
 // Listeners
