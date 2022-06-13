@@ -209,7 +209,9 @@ function evaluateExpression(){
 
   // Evaluate expression; append answer to left-side of expression array
   let answer = operate(operator, term1n, term2n);
-  expressionArray.unshift(answer);
+
+  // Append answer back on array; convert back to string
+  expressionArray.unshift("" + answer);
 
   // Show expression answer in dispay window
   updateDisplayWindow(expressionArray[0], "answer");
