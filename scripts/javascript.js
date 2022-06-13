@@ -191,7 +191,7 @@ function evaluateExpression(){
   }
 
   // Check for division by zero
-  if(expressionArray[1] == "division" && expressionArray[2]===0){
+  if(expressionArray[1] == "division" && expressionArray[2]==="0"){
     snarkyComment();
     return;
   }
