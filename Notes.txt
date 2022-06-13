@@ -2,7 +2,6 @@
 
 * (6c) Need to add rounding/precision so that non-terminating decimals don't run too far
 + Look up why JS truncates the decimals without explicit code
-- (10) Add keyboard support
 
 # Misc
 - Add 'history' into display window (eg) above where answer is displayed. This will show the expression that was just evaluated, eg:
@@ -12,6 +11,6 @@ Display window: 14
 - Update to include use of [objects] somehow
 
 # Style
-- Animate buttons on click event; ie, make it look like they're clicked
 - Make answer in window bold
 = Make it a slightly different color too
+= Will need to remove bold/color upon user appending operator to [answer]
