@@ -1,7 +1,5 @@
 # Per Instructions
 
-* (6c) Need to add rounding/precision so that non-terminating decimals don't run too far
-+ Look up why JS truncates the decimals without explicit code
 
 # Misc
 - Add 'history' into display window (eg) above where answer is displayed. This will show the expression that was just evaluated, eg:

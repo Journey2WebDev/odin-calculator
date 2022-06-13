@@ -64,44 +64,42 @@ function clearWindowAndVars(){
 }
 
 function getNumContent(numElement){
-  let content = "";
-
   if(windowShowingAnswer){
-    // Only allow numbers if display window is *not* showing answer of an expression
-    return;
-  } else {
+    // If window is showing answer upon btn push, clear all and continue with user input
+    clearWindowAndVars();
+  } 
 
-    // Check if keyboard or click input
-    if(this.textContent != undefined){
-      numElement = this;
-    }
-
-    content = numElement.textContent;
-
-    updateDisplayWindow(content, "number");
-    updateNumberSequnce(content);
-    updateExpressionArray(currentNumberSequence, "number");
+  // Check if keyboard or click input
+  if(this.textContent != undefined){
+    numElement = this;
   }
+
+  let content = numElement.textContent;
+
+  updateDisplayWindow(content, "number");
+  updateNumberSequnce(content);
+  updateExpressionArray(currentNumberSequence, "number");
 }
 
 function getDecimalContent(dotElement){
   if(windowShowingAnswer){
-    // Only allow numbers if display window is *not* showing answer of an expression
-    return;
-  } else if(termHasDecimal == true){
-    return;
-  } else {
-
-    // Check if keyboard or click input
-    if(this.textContent != undefined){
-      dotElement = this;
-    }
-
-    let content = dotElement.textContent;
-    updateDisplayWindow(content, "number");
-    updateNumberSequnce(content);
-    termHasDecimal = true;
+    // If window is showing answer upon btn push, clear all and continue with user input
+    clearWindowAndVars();
   }
+
+  if(termHasDecimal == true){
+    return;
+  }
+
+  // Check if keyboard or click input
+  if(this.textContent != undefined){
+    dotElement = this;
+  }
+
+  let content = dotElement.textContent;
+  updateDisplayWindow(content, "number");
+  updateNumberSequnce(content);
+  termHasDecimal = true;
 }
 
 function getOperatorContent(opElement){
@@ -204,11 +202,14 @@ function evaluateExpression(){
   let term2 = expressionArray.shift();
 
   // Determine whether terms have decimal ==> parse as Int or Float
-  let term1n = (term1.indexOf(".") > 0) ? parseFloat(term1) : parseInt(term1);
-  let term2n = (term2.indexOf(".") > 0) ? parseFloat(term2) : parseInt(term2);
+  let term1n = (term1.indexOf(".") >= 0) ? parseFloat(term1) : parseInt(term1);
+  let term2n = (term2.indexOf(".") >= 0) ? parseFloat(term2) : parseInt(term2);
 
   // Evaluate expression; append answer to left-side of expression array
   let answer = operate(operator, term1n, term2n);
+
+  // Maximum number of decimal places is 8
+  answer = parseFloat(answer.toFixed(8));
 
   // Append answer back on array; convert back to string
   expressionArray.unshift("" + answer);
