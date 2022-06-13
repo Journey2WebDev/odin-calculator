@@ -40,22 +40,22 @@ function operate(operator, a, b){
 // Global variables & Initial Conditions
 // ------------------------------
 
+let expressionArray = []
 let currentNumberSequence = "";
 let expressionHasOperator = false;
-let expressionArray = []
-let windowShowingAnswer = false;
 let termHasDecimal = false;
+let windowShowingAnswer = false;
 
 // ------------------------------
 // Functions
 // ------------------------------
 
 function resetGlobalVars(){
+  expressionArray = [];
   currentNumberSequence = "";
   expressionHasOperator = false;
-  expressionArray = [];
-  windowShowingAnswer = false;
   termHasDecimal = false;
+  windowShowingAnswer = false;
 }
 
 function clearWindowAndVars(){
@@ -155,19 +155,11 @@ function updateNumberSequnce(num){
 
 function updateExpressionArray(element, type){ 
   if(type == "number" && expressionHasOperator == false){
-    // First term (first element) in expression array
-    if(termHasDecimal == true){
-      expressionArray[0] = parseFloat(currentNumberSequence);
-    }else{
-      expressionArray[0] = parseInt(currentNumberSequence);
-    }
+    // No operator ==> Update first element (first term) in expression array
+    expressionArray[0] = currentNumberSequence;
   } else if(type == "number" && expressionHasOperator == true) {
-    // Second term (third element) in expression array
-    if(termHasDecimal == true){
-      expressionArray[2] = parseFloat(currentNumberSequence);
-    }else{
-      expressionArray[2] = parseInt(currentNumberSequence);
-    }
+    // Operator ==> Update third element (second term) in expression array
+    expressionArray[2] = currentNumberSequence;
   } else if(type == "operator"){
     // Operator is always second element in expression array
     expressionArray[1] = element;
@@ -191,8 +183,12 @@ function evaluateExpression(){
   let operator = expressionArray.shift();
   let term2 = expressionArray.shift();
 
+  // Determine whether terms have decimal ==> parse as Int or Float
+  let term1n = (term1.indexOf(".") > 0) ? parseFloat(term1) : parseInt(term1);
+  let term2n = (term2.indexOf(".") > 0) ? parseFloat(term2) : parseInt(term2);
+
   // Evaluate expression; append answer to left-side of expression array
-  let answer = operate(operator, term1, term2);
+  let answer = operate(operator, term1n, term2n);
   expressionArray.unshift(answer);
 
   // Show expression answer in dispay window
@@ -208,6 +204,7 @@ function evaluateExpression(){
   termHasDecimal = false;
 }
 
+
 // ------------------------------
 // Delete Button Functions
 // ------------------------------
@@ -222,18 +219,10 @@ function deleteCheck(){
 
   if(expressionArray.length == 0){
     return;
-  } else {
-    let lastArrayItem = expressionArray.pop();
-    console.log(lastArrayItem);
-
-    switch(typeof lastArrayItem){
-      // If popped item is a string, it's the operator
-      case "string":
-        deleteOperator();
-      case "number":
-        deleteNumber(lastArrayItem);
-    }
   }
+  
+  lastArrayItem = expressionArray.pop();
+  (expressionArray.length == 1) ? deleteOperator() : deleteNumber(lastArrayItem);
 }
 
 function deleteOperator(){
@@ -256,44 +245,32 @@ function deleteOperator(){
 }
 
 function deleteNumber(lastArrayItem){
-  // Convert number to string
-  let temp = "" + lastArrayItem;
+  // Check if char to be removed is decimal; update boolean if so
+  let lastChar = lastArrayItem.slice(-1);
+  
+  if(lastChar == "."){
+    termHasDecimal = false;
+  }
 
-  // If string is length 1 (ie, a single number), just clear window
-  if(temp.length == 1){
+  // If string for term1 is length 1 (ie, a single number), just clear window
+  if(expressionArray.length == 0 && lastArrayItem.length == 1){
     clearWindowAndVars()
     return;
-  }else{
-    
-    // Check if char to be removed is decimal; update boolean if so
-    let lastChar = temp.slice(-1);
-    if(temp.slice(-1) == "."){
-      termHasDecimal = false;
-    }
-
-    let newString = temp.slice(0,(temp.length-1));
-
-    // Update window with modified string
-    document.getElementById("displayWindow").textContent = newString;
-
-    // Update number sequence
-    currentNumberSequence = newString;
-
-    // Update expression array (item was popped off)
-    updateExpressionArray(newString, "number");
-
-    return;
   }
+
+  let newString = lastArrayItem.slice(0,(lastArrayItem.length-1));
+
+  // Update window with modified string
+  let windowText = document.getElementById("displayWindow").textContent
+  windowText = windowText.slice(0,(windowText.length-1))
+  document.getElementById("displayWindow").textContent = windowText;
+
+  // Update number sequence
+  currentNumberSequence = newString;
+
+  // Update expression array (item was popped off)
+  updateExpressionArray(newString, "number");
 }
-
-
-// document.getElementById("displayWindow").textContent = ""
-// let currentNumberSequence = "";
-// let expressionHasOperator = false;
-// let expressionArray = []
-// let windowShowingAnswer = false;
-// let termHasDecimal = false;
-
 
 // ------------------------------
 // Snarky Comments
