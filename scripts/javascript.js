@@ -59,6 +59,7 @@ function resetGlobalVars(){
 }
 
 function clearWindowAndVars(){
+  document.getElementById("historyWindow").textContent = ""
   document.getElementById("displayWindow").textContent = ""
   resetGlobalVars();
 }
@@ -197,9 +198,9 @@ function evaluateExpression(){
   }
 
   // Pull numbers and operator from left-side of expression array
-  let term1 = expressionArray.shift();
-  let operator = expressionArray.shift();
-  let term2 = expressionArray.shift();
+  let term1 = expressionArray[0];
+  let operator = expressionArray[1];
+  let term2 = expressionArray[2];
 
   // Determine whether terms have decimal ==> parse as Int or Float
   let term1n = (term1.indexOf(".") >= 0) ? parseFloat(term1) : parseInt(term1);
@@ -211,8 +212,11 @@ function evaluateExpression(){
   // Maximum number of decimal places is 8
   answer = parseFloat(answer.toFixed(8));
 
+  // Show expression evaluated in history window
+  document.getElementById("historyWindow").textContent = document.getElementById("displayWindow").textContent + "=";
+
   // Append answer back on array; convert back to string
-  expressionArray.unshift("" + answer);
+  expressionArray = ["" + answer];
 
   // Show expression answer in dispay window
   updateDisplayWindow(expressionArray[0], "answer");

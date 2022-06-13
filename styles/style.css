@@ -12,19 +12,41 @@
   background-color: darkgray;
 }
 
-#displayWindow{
-  height: 112px;
-  width: 487px;
-  border: 1px solid black;
-  border-radius: 10%;
+#historyWindow{
+  height: 56px;
+  width: 480px;
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-radius: 40% 40% 0% 0%; /* top-left, top-right */
   background-color: whitesmoke;
   display: flex;
   justify-content: flex-end;
-  align-items: center;
+  align-items: flex-end;
+  padding-right: 15px;
+  font-family: "courier new";
+  font-size: 16pt;
+  font-weight: 200;
+  color: lightblue;
+}
+
+#displayWindow{
+  height: 56px;
+  width: 480px;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  /* bottom right, bottom, left */
+  border-radius: 0% 0% 10% 10%;
+  background-color: whitesmoke;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
   padding-right: 15px;
   font-family: "courier new";
   font-size: 24pt;
 }
+
 
 #numOpDiv{
   height: 375px;
